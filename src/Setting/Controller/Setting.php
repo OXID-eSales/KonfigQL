@@ -20,14 +20,26 @@ final class Setting
 
     /**
      * @Query()
+     * @param string|null $settingName
      *
+     * @return SettingDataType[]
      */
-    public function settings($settingName = null)
+    public function settings(string $settingName = null): array
     {
         if (empty($settingName)) {
             return $this->settingsService->settings();
         } else {
-            return $this->settingsService->getSingleSetting($settingName);
+            return [$this->settingsService->getSingleSetting($settingName)];
         }
+    }
+
+    /**
+     * @Mutation()
+     * @param $settingName
+     * @param $value
+     */
+    public function updateSetting($settingName, $value)
+    {
+        $this->settingsService->updateSingleSetting($settingName, $value);
     }
 }
