@@ -1,2 +1,2 @@
 # KonfigQL
-Keywan OXID settings manager (GraphQL)
+Keywan OXID settings manager (GraphQL) (Copyright 2021)
