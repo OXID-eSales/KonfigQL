@@ -6,7 +6,7 @@ namespace APICodingDays\KonfigQL\Setting\Infrastructure;
 
 use APICodingDays\KonfigQL\Setting\DataType\Setting;
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\EshopProfessional\Core\DatabaseProvider;
+use OxidEsales\Eshop\Core\DatabaseProvider;
 
 final class SettingRepository
 {
