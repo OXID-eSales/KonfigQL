@@ -1,24 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace APICodingDays\KonfigQL\Setting\Infrastructure;
 
 use APICodingDays\KonfigQL\Setting\DataType\Setting;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopProfessional\Core\DatabaseProvider;
 
-class SettingRepository
+final class SettingRepository
 {
     public function settings() : array
     {
-        $query = "SELECT OXID, OXSHOPID, OXVARNAME, OXVARTYPE, decode( OXVARVALUE, 'fq45QS09_fqyx09239QQ' ) AS OXVARVALUE
+        $configKey = Registry::getConfig()->getConfigParam('sConfigKey');
+        $shopId = Registry::getConfig()->getShopId();
+        $db = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC);
+        $query = "SELECT OXID, OXVARNAME, decode(OXVARVALUE, ?) AS OXVARVALUE, OXVARTYPE
                     FROM oxconfig
-                    WHERE OXSHOPID = 1";
+                    WHERE OXSHOPID = ?";
+        $settings = $db->getAll($query, [$configKey, $shopId]);
 
-        $settings = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getAll($query);
-
-        return array_map(function ($setting) { return new Setting($setting); }, $settings);
-
-
-
+        return array_map(function ($setting) {
+            return new Setting($setting);
+        }, $settings);
     }
 }
