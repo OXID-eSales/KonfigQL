@@ -22,7 +22,7 @@ final class Setting
      * @Query()
      * @param string|null $settingName
      *
-     * @return array
+     * @return \APICodingDays\KonfigQL\Setting\DataType\Setting[]
      */
     public function settings(string $settingName = null): array
     {
