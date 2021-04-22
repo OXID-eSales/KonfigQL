@@ -10,6 +10,28 @@ use OxidEsales\Eshop\Core\DatabaseProvider;
 
 final class SettingRepository
 {
+    /**
+     * @var string[]
+     */
+     private $filterInternalConfig = [
+         'aServersData',
+         'blEnableIntangibleProdAgreement',
+         'blShowTSCODMessage',
+         'blShowTSInternationalFeesMessage',
+         'iOlcSuccess',
+         'sBackTag',
+         'sClusterId',
+         'sOnlineLicenseCheckTime',
+         'sOnlineLicenseNextCheckTime',
+         'sParcelService',
+         'blUseContentCaching',
+         'iTimeToUpdatePrices',
+         'IMA',
+         'IMD',
+         'IMS',
+         'OXSERIAL',
+         'iFailedOnlineCallsCount'];
+
     public function settings() : array
     {
         $configKey = Registry::getConfig()->getConfigParam('sConfigKey');
@@ -20,9 +42,14 @@ final class SettingRepository
                     WHERE OXSHOPID = ?";
         $settings = $db->getAll($query, [$configKey, $shopId]);
 
+        // Filter out Internal Config parameters
+        $filteredSettings = array_filter($settings, function ($configVar) {
+            return (!in_array($configVar['OXVARNAME'], $this->filterInternalConfig));
+        });
+
         return array_map(function ($setting) {
             return new Setting($setting);
-        }, $settings);
+        }, $filteredSettings);
     }
 
     public function getSingleSetting($settingName)
