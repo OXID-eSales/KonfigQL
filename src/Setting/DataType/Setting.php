@@ -63,4 +63,27 @@ final class Setting
     {
         return (string) $this->setting['OXVARVALUE'];
     }
+
+    /**
+     * @Field
+     * @return string
+     */
+    public function type()
+    {
+        $map = [
+            'aarr' => 'associative array',
+            'arr' => 'array',
+            'bool' => 'boolean',
+            'num' => 'number',
+            'str' => 'string',
+            'select' => 'select',
+        ];
+        $internalType = $this->setting['OXVARTYPE'];
+
+        $res = $map[$internalType] ?? $internalType;
+
+        return (string) $res;
+    }
+
+
 }
