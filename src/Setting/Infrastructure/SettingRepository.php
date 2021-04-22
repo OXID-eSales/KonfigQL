@@ -53,7 +53,7 @@ final class SettingRepository
         }, $filteredSettings);
     }
 
-    public function getSingleSetting($settingName)
+    public function getSingleSetting($settingName):Setting
     {
         $configKey = Registry::getConfig()->getConfigParam('sConfigKey');
         $shopId = Registry::getConfig()->getShopId();
@@ -76,8 +76,7 @@ final class SettingRepository
         $query = "UPDATE oxconfig
             SET OXVARVALUE = encode(?,?)
             WHERE OXSHOPID = ?
-            AND OXVARNAME = ?
-            ";
+            AND OXVARNAME = ?";
 
         return (bool) $db->execute($query, [$value, $configKey, $shopId, $settingName]);
     }
