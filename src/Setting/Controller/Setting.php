@@ -32,4 +32,14 @@ final class Setting
             return [$this->settingsService->getSingleSetting($settingName)];
         }
     }
+
+    /**
+     * @Mutation()
+     * @param $settingName
+     * @param $value
+     */
+    public function updateSetting($settingName, $value)
+    {
+        $this->settingsService->updateSingleSetting($settingName, $value);
+    }
 }

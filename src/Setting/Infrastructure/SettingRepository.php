@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace APICodingDays\KonfigQL\Setting\Infrastructure;
 
@@ -10,7 +10,7 @@ use OxidEsales\Eshop\Core\DatabaseProvider;
 
 final class SettingRepository
 {
-    public function settings() : array
+    public function settings(): array
     {
         $configKey = Registry::getConfig()->getConfigParam('sConfigKey');
         $shopId = Registry::getConfig()->getShopId();
@@ -38,5 +38,19 @@ final class SettingRepository
         $setting = $db->getCol($query, [$configKey, $shopId, $settingName]);
 
         return new Setting($setting);
+    }
+
+    public function updateSingleSetting($settingName, $value)
+    {
+        $configKey = Registry::getConfig()->getConfigParam('sConfigKey');
+        $shopId = Registry::getConfig()->getShopId();
+        $db = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC);
+        $query = "UPDATE oxconfig
+            SET OXVARVALUE = encode(?,?)
+            WHERE OXSHOPID = ?
+            AND OXVARNAME = ?
+            ";
+
+        $db->execute($query, [$value, $configKey, $shopId, $settingName]);
     }
 }
