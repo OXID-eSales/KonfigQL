@@ -1,5 +1,5 @@
 {
-    "name": "my-vendor/my-package",
+    "name": "api-coding-days/konfigql",
     "description": "",
     "type": "oxideshop-module",
     "keywords": [
@@ -13,7 +13,7 @@
     ],
     "extra": {
         "oxideshop": {
-            "target-directory": "my-vendor/my-package"
+            "target-directory": "acd/KonfigQL"
         }
     },
     "require": {
@@ -30,8 +30,8 @@
     },
     "autoload": {
         "psr-4": {
-            "MyVendor\\GraphQL\\MyPackage\\": "src/",
-            "MyVendor\\GraphQL\\MyPackage\\Tests\\": "tests/"
+            "APICodingDays\\KonfigQL\\": "src/",
+            "APICodingDays\\KonfigQL\\Tests\\": "tests/"
         }
     },
     "scripts": {

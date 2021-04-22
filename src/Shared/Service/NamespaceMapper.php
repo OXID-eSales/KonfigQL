@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\GraphQL\MyPackage\Shared\Service;
+namespace APICodingDays\KonfigQL\Shared\Service;
 
 use OxidEsales\GraphQL\Base\Framework\NamespaceMapperInterface;
 

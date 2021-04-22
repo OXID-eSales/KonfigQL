@@ -13,12 +13,12 @@ $sMetadataVersion = '2.0';
  * Module information
  */
 $aModule = [
-    'id'          => 'my-vendor/my-package',
-    'title'       => 'GraphQL MyPackage',
+    'id'          => 'konfigql',
+    'title'       => 'API Coding Days KonfigQL',
     'description' =>  '',
     'thumbnail'   => 'out/pictures/logo.png',
     'version'     => '0.0.1',
-    'author'      => 'MyVendor',
+    'author'      => 'API Coding Days',
     'url'         => '',
     'email'       => '',
     'extend'      => [

@@ -7,9 +7,9 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\GraphQL\MyPackage\Category\Infrastructure;
+namespace APICodingDays\KonfigQL\Category\Infrastructure;
 
-use MyVendor\GraphQL\MyPackage\Category\DataType\Category as CategoryDataType;
+use APICodingDays\KonfigQL\Category\DataType\Category as CategoryDataType;
 use OxidEsales\Eshop\Application\Model\Category as CategoryEshopModel;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 

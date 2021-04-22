@@ -3,7 +3,7 @@ actor: AcceptanceTester
 path: Acceptance
 modules:
   enabled:
-    - \MyVendor\GraphQL\MyPackage\Tests\Codeception\Helper\Acceptance
+    - \APICodingDays\KonfigQL\Tests\Codeception\Helper\Acceptance
     - REST:
         url: '%SHOP_URL%'
         depends: PhpBrowser

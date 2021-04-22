@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\GraphQL\MyPackage\Category\DataType;
+namespace APICodingDays\KonfigQL\Category\DataType;
 
 use DateTimeImmutable;
 use DateTimeInterface;

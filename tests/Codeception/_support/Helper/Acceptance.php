@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\GraphQL\MyPackage\Tests\Codeception\Helper;
+namespace APICodingDays\KonfigQL\Tests\Codeception\Helper;
 
 use OxidEsales\Facts\Facts;
 

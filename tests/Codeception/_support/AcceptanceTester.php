@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\GraphQL\MyPackage\Tests\Codeception;
+namespace APICodingDays\KonfigQL\Tests\Codeception;
 
 /**
  * Inherited Methods

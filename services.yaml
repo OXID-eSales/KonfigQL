@@ -4,11 +4,11 @@ services:
         public: false
         autowire: true
 
-    MyVendor\GraphQL\MyPackage\:
+    APICodingDays\KonfigQL\:
         resource: 'src/*'
         exclude: 'src/**/DataType'
         public: true
 
-    MyVendor\GraphQL\MyPackage\Shared\Service\NamespaceMapper:
-        class: MyVendor\GraphQL\MyPackage\Shared\Service\NamespaceMapper
+    APICodingDays\KonfigQL\Shared\Service\NamespaceMapper:
+        class: APICodingDays\KonfigQL\Shared\Service\NamespaceMapper
         tags: ['graphql_namespace_mapper']

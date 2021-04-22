@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\GraphQL\MyPackage\Category\Service;
+namespace APICodingDays\KonfigQL\Category\Service;
 
-use MyVendor\GraphQL\MyPackage\Category\DataType\Category as CategoryDataType;
-use MyVendor\GraphQL\MyPackage\Category\Exception\CategoryNotFound;
-use MyVendor\GraphQL\MyPackage\Category\Infrastructure\CategoryRepository;
+use APICodingDays\KonfigQL\Category\DataType\Category as CategoryDataType;
+use APICodingDays\KonfigQL\Category\Exception\CategoryNotFound;
+use APICodingDays\KonfigQL\Category\Infrastructure\CategoryRepository;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 

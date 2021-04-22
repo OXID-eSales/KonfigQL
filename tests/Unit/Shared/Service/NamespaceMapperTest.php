@@ -7,13 +7,13 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\GraphQL\MyPackage\Tests\Unit\Shared\Service;
+namespace APICodingDays\KonfigQL\Tests\Unit\Shared\Service;
 
-use MyVendor\GraphQL\MyPackage\Shared\Service\NamespaceMapper;
+use APICodingDays\KonfigQL\Shared\Service\NamespaceMapper;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers MyVendor\GraphQL\MyPackage\Shared\Service\NamespaceMapper
+ * @covers APICodingDays\KonfigQL\Shared\Service\NamespaceMapper
  */
 final class NamespaceMapperTest extends TestCase
 {

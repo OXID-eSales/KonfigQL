@@ -7,9 +7,9 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\GraphQL\MyPackage\Tests\Codeception\Acceptance;
+namespace APICodingDays\KonfigQL\Tests\Codeception\Acceptance;
 
-use MyVendor\GraphQL\MyPackage\Tests\Codeception\AcceptanceTester;
+use APICodingDays\KonfigQL\Tests\Codeception\AcceptanceTester;
 
 final class CategoryQueryCest
 {

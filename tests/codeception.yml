@@ -1,4 +1,4 @@
-namespace: MyVendor\GraphQL\MyPackage\Tests\Codeception
+namespace: APICodingDays\KonfigQL\Tests\Codeception
 
 params:
     - Codeception/params.php

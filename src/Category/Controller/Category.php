@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\GraphQL\MyPackage\Category\Controller;
+namespace APICodingDays\KonfigQL\Category\Controller;
 
-use MyVendor\GraphQL\MyPackage\Category\DataType\Category as CategoryDataType;
-use MyVendor\GraphQL\MyPackage\Category\Service\Category as CategoryService;
+use APICodingDays\KonfigQL\Category\DataType\Category as CategoryDataType;
+use APICodingDays\KonfigQL\Category\Service\Category as CategoryService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 
 final class Category
