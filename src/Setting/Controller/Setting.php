@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace APICodingDays\KonfigQL\Setting\Controller;
 
@@ -21,10 +21,13 @@ final class Setting
     /**
      * @Query()
      *
-     * @return SettingDataType[]
      */
-    public function settings(): array
+    public function settings($settingName = null)
     {
-        return $this->settingsService->settings();
+        if (empty($settingName)) {
+            return $this->settingsService->settings();
+        } else {
+            return $this->settingsService->getSingleSetting($settingName);
+        }
     }
 }

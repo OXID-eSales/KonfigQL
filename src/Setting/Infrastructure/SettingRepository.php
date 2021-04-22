@@ -24,4 +24,19 @@ final class SettingRepository
             return new Setting($setting);
         }, $settings);
     }
+
+    public function getSingleSetting($settingName)
+    {
+        $configKey = Registry::getConfig()->getConfigParam('sConfigKey');
+        $shopId = Registry::getConfig()->getShopId();
+        $db = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC);
+        $query = "SELECT OXID, decode(OXVARVALUE, ?) AS OXVARVALUE, OXVARTYPE
+                    FROM oxconfig
+                    WHERE OXSHOPID = ?
+                    AND OXVARNAME = ?";
+
+        $setting = $db->getCol($query, [$configKey, $shopId, $settingName]);
+
+        return new Setting($setting);
+    }
 }
