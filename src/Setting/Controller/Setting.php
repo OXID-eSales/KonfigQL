@@ -6,6 +6,7 @@ namespace APICodingDays\KonfigQL\Setting\Controller;
 
 use APICodingDays\KonfigQL\Setting\DataType\Setting as SettingDataType;
 use APICodingDays\KonfigQL\Setting\Infrastructure\SettingRepository;
+use TheCodingMachine\GraphQLite\Annotations\Mutation;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 
 final class Setting
@@ -34,12 +35,15 @@ final class Setting
     }
 
     /**
+     * Updates a single setting
+     *
      * @Mutation()
-     * @param $settingName
-     * @param $value
+     * @param string $settingName Name (OXVARNAME) of the setting
+     * @param string $value       Value (OXVARVALUE, encoded) of the setting
+     * @return bool
      */
-    public function updateSetting($settingName, $value)
+    public function updateSetting(string $settingName, string $value): bool
     {
-        $this->settingsService->updateSingleSetting($settingName, $value);
+        return $this->settingsService->updateSingleSetting($settingName, $value);
     }
 }

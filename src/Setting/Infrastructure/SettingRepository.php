@@ -40,7 +40,7 @@ final class SettingRepository
         return new Setting($setting);
     }
 
-    public function updateSingleSetting($settingName, $value)
+    public function updateSingleSetting($settingName, $value): bool
     {
         $configKey = Registry::getConfig()->getConfigParam('sConfigKey');
         $shopId = Registry::getConfig()->getShopId();
@@ -51,6 +51,6 @@ final class SettingRepository
             AND OXVARNAME = ?
             ";
 
-        $db->execute($query, [$value, $configKey, $shopId, $settingName]);
+        return (bool) $db->execute($query, [$value, $configKey, $shopId, $settingName]);
     }
 }
