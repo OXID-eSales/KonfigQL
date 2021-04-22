@@ -1,13 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace APICodingDays\KonfigQL\Setting\DataType;
 
 use TheCodingMachine\GraphQLite\Types\ID;
+use TheCodingMachine\GraphQLite\Annotations\Field;
+use TheCodingMachine\GraphQLite\Annotations\Type;
 
 /**
  * @Type()
  */
-class Setting
+final class Setting
 {
     private $setting;
 
@@ -53,7 +57,7 @@ class Setting
 
     /**
      * @Field
-     * @return string|float|int
+     * @return string
      */
     public function value()
     {
