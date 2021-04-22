@@ -1,0 +1,14 @@
+services:
+
+    _defaults:
+        public: false
+        autowire: true
+
+    MyVendor\GraphQL\MyPackage\:
+        resource: 'src/*'
+        exclude: 'src/**/DataType'
+        public: true
+
+    MyVendor\GraphQL\MyPackage\Shared\Service\NamespaceMapper:
+        class: MyVendor\GraphQL\MyPackage\Shared\Service\NamespaceMapper
+        tags: ['graphql_namespace_mapper']
