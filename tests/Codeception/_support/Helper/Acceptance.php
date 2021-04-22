@@ -19,6 +19,6 @@ final class Acceptance extends \Codeception\Module
     public function _beforeSuite($settings = []): void
     {
         exec((new Facts())->getShopRootPath() . '/bin/oe-console oe:module:activate oe_graphql_base');
-        exec((new Facts())->getShopRootPath() . '/bin/oe-console oe:module:activate my-vendor/my-package');
+        exec((new Facts())->getShopRootPath() . '/bin/oe-console oe:module:activate konfigql');
     }
 }

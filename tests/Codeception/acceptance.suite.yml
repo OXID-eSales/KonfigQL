@@ -3,8 +3,12 @@ actor: AcceptanceTester
 path: Acceptance
 modules:
   enabled:
+    - Asserts
     - \APICodingDays\KonfigQL\Tests\Codeception\Helper\Acceptance
     - REST:
         url: '%SHOP_URL%'
         depends: PhpBrowser
         part: Json
+    - \OxidEsales\GraphQL\Base\Tests\Codeception\Module\AcceptanceHelper:
+          depends:
+              - REST
