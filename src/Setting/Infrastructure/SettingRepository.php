@@ -76,7 +76,7 @@ final class SettingRepository
         }, $filteredSettings);
     }
 
-    public function getSingleSetting(string $settingName):Setting
+    public function getSingleSetting(string $settingId):Setting
     {
         $configKey = $this->legacyService->getConfigParam('sConfigKey');
         $shopId = $this->legacyService->getShopId();
@@ -85,12 +85,12 @@ final class SettingRepository
         $queryBuilder->select('OXID, OXVARNAME, decode(OXVARVALUE, :confKey) AS OXVARVALUE, OXVARTYPE')
             ->from('oxconfig')
             ->where('OXSHOPID = :shopid')
-            ->andWhere('OXVARNAME = :name')
+            ->andWhere('OXID = :id')
             ->setParameters(
                 [
                     'confKey' => $configKey,
                     'shopid' => $shopId,
-                    'name' => $settingName
+                    'id' => $settingId
                 ]
             );
         /** @var \Doctrine\DBAL\Statement $result */
@@ -100,7 +100,7 @@ final class SettingRepository
         return new Setting($setting);
     }
 
-    public function updateSingleSetting(string $settingName, string $value): bool
+    public function updateSingleSetting(string $settingId, string $value): bool
     {
         $configKey = $this->legacyService->getConfigParam('sConfigKey');
         $shopId = $this->legacyService->getShopId();
@@ -109,10 +109,10 @@ final class SettingRepository
             ->update('oxconfig')
             ->set('OXVARVALUE', 'encode(:value, :key)')
             ->where('OXSHOPID = :shopId')
-            ->where('OXVARNAME = :name')
+            ->where('OXID = :id')
             ->setParameters([
                 'shopId' => $shopId,
-                'name'   => $settingName,
+                'id'   => $settingId,
                 'value'  => $value,
                 'key'    => $configKey,
         ]);
