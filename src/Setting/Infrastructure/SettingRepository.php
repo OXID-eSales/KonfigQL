@@ -71,9 +71,16 @@ final class SettingRepository
             return (!in_array($configVar['OXVARNAME'], $this->filterInternalConfig));
         });
 
-        return array_map(function ($setting) {
+
+        $settingObjects = array_map(function ($setting) {
             return new Setting($setting);
         }, $filteredSettings);
+
+        $filteredSettingObjects = array_filter($settingObjects, function (Setting $setting) {
+            return $setting->displayName() != $setting->internalName();
+        });
+
+        return $filteredSettingObjects;
     }
 
     public function getSingleSetting(string $settingId):Setting
