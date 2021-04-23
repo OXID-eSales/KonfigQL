@@ -44,7 +44,9 @@ final class SettingRepository
         'IMD',
         'IMS',
         'OXSERIAL',
-        'iFailedOnlineCallsCount'
+        'iFailedOnlineCallsCount',
+        // Remove token until we have a different way to display long values
+        'sJsonWebTokenSignature',
     ];
 
     public function settings(): array
