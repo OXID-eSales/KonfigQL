@@ -37,7 +37,7 @@ final class SettingsQueryCest
         $I->assertContains($expectingSettings, $settingsData);
     }
 
-    public function testFetchOneSettings(AcceptanceTester $I): void
+    public function testFetchOneSetting(AcceptanceTester $I): void
     {
         $I->haveHTTPHeader('Content-Type', 'application/json');
         $I->sendPOST('/widget.php?cl=graphql', [
@@ -62,6 +62,26 @@ final class SettingsQueryCest
                     'value' => "1619101614",
                     'helpText' => "",
                 ],
+            ],
+        ]);
+    }
+
+    public function testUpdateSetting(AcceptanceTester $I): void
+    {
+        $I->haveHTTPHeader('Content-Type', 'application/json');
+        $I->sendPOST('/widget.php?cl=graphql', [
+            'query' => 'mutation {
+                updateSetting (
+                  settingName: "blShowBirthdayFields"
+                  value: "1"
+                )
+            }',
+        ]);
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+        $I->seeResponseIsJson();
+        $I->seeResponseContainsJson([
+            'data' => [
+                "updateSetting" => true
             ],
         ]);
     }
