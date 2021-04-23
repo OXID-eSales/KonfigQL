@@ -28,12 +28,41 @@ final class SettingsQueryCest
         $settingsData = $result['data']['settings'];
 
         $expectingSettings = [
-            'id' => "8563fba1965a11df3.34244997",
-            'displayName' => "blEnterNetPrice",
-            'internalName' => "blEnterNetPrice",
-            'value' => "",
+            'id' => "serial2",
+            'displayName' => "sTagList",
+            'internalName' => "sTagList",
+            'value' => "1619101614",
             'helpText' => "",
         ];
         $I->assertContains($expectingSettings, $settingsData);
+    }
+
+    public function testFetchOneSettings(AcceptanceTester $I): void
+    {
+        $I->haveHTTPHeader('Content-Type', 'application/json');
+        $I->sendPOST('/widget.php?cl=graphql', [
+            'query' => 'query {
+                settings (settingName: "sTagList") {
+                    id
+                    displayName
+                    internalName
+                    value
+                    helpText
+                }
+            }',
+        ]);
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+        $I->seeResponseIsJson();
+        $I->seeResponseContainsJson([
+            'data' => [
+                'settings' => [
+                    'id' => "serial2",
+                    'displayName' => "sTagList",
+                    'internalName' => "sTagList",
+                    'value' => "1619101614",
+                    'helpText' => "",
+                ],
+            ],
+        ]);
     }
 }

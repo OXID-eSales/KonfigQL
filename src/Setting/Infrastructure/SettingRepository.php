@@ -5,11 +5,25 @@ declare(strict_types = 1);
 namespace APICodingDays\KonfigQL\Setting\Infrastructure;
 
 use APICodingDays\KonfigQL\Setting\DataType\Setting;
-use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\Eshop\Core\DatabaseProvider;
+use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
+use OxidEsales\GraphQL\Base\Infrastructure\Legacy;
 
 final class SettingRepository
 {
+    /** @var Legacy */
+    private $legacyService;
+
+    /** @var QueryBuilderFactoryInterface */
+    private $queryBuilderFactory;
+
+    public function __construct(
+        Legacy $legacyService,
+        QueryBuilderFactoryInterface $queryBuilderFactory
+    ) {
+        $this->legacyService = $legacyService;
+        $this->queryBuilderFactory = $queryBuilderFactory;
+    }
+
     /**
      * @var string[]
      */
@@ -35,13 +49,22 @@ final class SettingRepository
 
     public function settings(): array
     {
-        $configKey = Registry::getConfig()->getConfigParam('sConfigKey');
-        $shopId = Registry::getConfig()->getShopId();
-        $db = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC);
-        $query = "SELECT OXID, OXVARNAME, decode(OXVARVALUE, ?) AS OXVARVALUE, OXVARTYPE
-                    FROM oxconfig
-                    WHERE OXSHOPID = ?";
-        $settings = $db->getAll($query, [$configKey, $shopId]);
+        $configKey = $this->legacyService->getConfigParam('sConfigKey');
+        $shopId = $this->legacyService->getShopId();
+
+        $queryBuilder = $this->queryBuilderFactory->create();
+        $queryBuilder->select('OXID, OXVARNAME, decode(OXVARVALUE, :confKey) AS OXVARVALUE, OXVARTYPE')
+            ->from('oxconfig')
+            ->where('OXSHOPID = :shopid')
+            ->setParameters(
+                [
+                    'confKey' => $configKey,
+                    'shopid' => $shopId,
+                ]
+            );
+        /** @var \Doctrine\DBAL\Statement $result */
+        $result = $queryBuilder->execute();
+        $settings = $result->fetchAll();
 
         // Filter out Internal Config parameters
         $filteredSettings = array_filter($settings, function ($configVar) {
@@ -55,29 +78,45 @@ final class SettingRepository
 
     public function getSingleSetting($settingName):Setting
     {
-        $configKey = Registry::getConfig()->getConfigParam('sConfigKey');
-        $shopId = Registry::getConfig()->getShopId();
-        $db = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC);
-        $query = "SELECT OXID, decode(OXVARVALUE, ?) AS OXVARVALUE, OXVARTYPE
-                    FROM oxconfig
-                    WHERE OXSHOPID = ?
-                    AND OXVARNAME = ?";
+        $configKey = $this->legacyService->getConfigParam('sConfigKey');
+        $shopId = $this->legacyService->getShopId();
 
-        $setting = $db->getCol($query, [$configKey, $shopId, $settingName]);
+        $queryBuilder = $this->queryBuilderFactory->create();
+        $queryBuilder->select('OXID, OXVARNAME, decode(OXVARVALUE, :confKey) AS OXVARVALUE, OXVARTYPE')
+            ->from('oxconfig')
+            ->where('OXSHOPID = :shopid')
+            ->andWhere('OXVARNAME = :name')
+            ->setParameters(
+                [
+                    'confKey' => $configKey,
+                    'shopid' => $shopId,
+                    'name' => $settingName
+                ]
+            );
+        /** @var \Doctrine\DBAL\Statement $result */
+        $result = $queryBuilder->execute();
+        $setting = $result->fetch();
 
         return new Setting($setting);
     }
 
     public function updateSingleSetting($settingName, $value): bool
     {
-        $configKey = Registry::getConfig()->getConfigParam('sConfigKey');
-        $shopId = Registry::getConfig()->getShopId();
-        $db = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC);
-        $query = "UPDATE oxconfig
-            SET OXVARVALUE = encode(?,?)
-            WHERE OXSHOPID = ?
-            AND OXVARNAME = ?";
+        $configKey = $this->legacyService->getConfigParam('sConfigKey');
+        $shopId = $this->legacyService->getShopId();
+        $queryBuilder = $this->queryBuilderFactory->create();
+        $queryBuilder
+            ->update('oxconfig')
+            ->set('OXVARVALUE', 'encode(:value, :key)')
+            ->where('OXSHOPID = :shopId')
+            ->where('OXVARNAME = :name')
+            ->setParameters([
+                'shopId' => $shopId,
+                'name'   => $settingName,
+                'value'  => $value,
+                'key'    => $configKey,
+        ]);
 
-        return (bool) $db->execute($query, [$value, $configKey, $shopId, $settingName]);
+        return (bool) $queryBuilder->execute();
     }
 }
