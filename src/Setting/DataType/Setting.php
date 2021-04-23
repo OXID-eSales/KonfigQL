@@ -37,7 +37,7 @@ final class Setting
      */
     public function displayName(): string
     {
-        $name = $this->setting['OXVARNAME'];
+        $name = (string) $this->setting['OXVARNAME'];
         $translation = $this->findTranslation($name, 'translation');
         if ($translation) {
             return $translation;
@@ -59,7 +59,7 @@ final class Setting
      */
     public function helpText(): string
     {
-        $name = $this->setting['OXVARNAME'];
+        $name = (string) $this->setting['OXVARNAME'];
         $translation = $this->findTranslation($name, 'help');
         if ($translation) {
             return $translation;
@@ -96,7 +96,7 @@ final class Setting
         return (string) $res;
     }
 
-    private function findTranslation($name, $type): string
+    private function findTranslation(string $name, string $type): string
     {
         $translationKey = SettingTitleMap::MAP[$name][$type] ?? null;
         if ($translationKey) {
