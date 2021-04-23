@@ -14,11 +14,8 @@ final class SettingsQueryCest
         $I->sendPOST('/widget.php?cl=graphql', [
             'query' => 'query {
                 settings {
-                    id
-                    displayName
                     internalName
                     value
-                    helpText
                 }
             }',
         ]);
@@ -28,11 +25,8 @@ final class SettingsQueryCest
         $settingsData = $result['data']['settings'];
 
         $expectingSettings = [
-            'id' => "serial2",
-            'displayName' => "sTagList",
-            'internalName' => "sTagList",
-            'value' => "1619101614",
-            'helpText' => "",
+            'internalName' => "iTopNaviCatCount",
+            'value' => "4"
         ];
         $I->assertContains($expectingSettings, $settingsData);
     }
@@ -42,10 +36,8 @@ final class SettingsQueryCest
         $I->haveHTTPHeader('Content-Type', 'application/json');
         $I->sendPOST('/widget.php?cl=graphql', [
             'query' => 'query {
-                settings (settingName: "sTagList") {
-                    id
+                settings (settingId: "8563fba1965a219c9.51133344") {
                     displayName
-                    internalName
                     value
                     helpText
                 }
@@ -53,17 +45,14 @@ final class SettingsQueryCest
         ]);
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseContainsJson([
-            'data' => [
-                'settings' => [
-                    'id' => "serial2",
-                    'displayName' => "sTagList",
-                    'internalName' => "sTagList",
-                    'value' => "1619101614",
+        $result = $I->grabJsonResponseAsArray();
+        $settingsData = $result['data']['settings'][0];
+        $expectingSettings = [
+                    'displayName' => "Lagerverwaltung aktiv",
+                    'value' => "1",
                     'helpText' => "",
-                ],
-            ],
-        ]);
+        ];
+        $I->assertSame($expectingSettings, $settingsData);
     }
 
     public function testUpdateSetting(AcceptanceTester $I): void
@@ -72,8 +61,8 @@ final class SettingsQueryCest
         $I->sendPOST('/widget.php?cl=graphql', [
             'query' => 'mutation {
                 updateSetting (
-                  settingName: "blShowBirthdayFields"
-                  value: "1"
+                  settingId: "8563fba1965a25500.87856483"
+                  value: "2"
                 )
             }',
         ]);
@@ -81,7 +70,7 @@ final class SettingsQueryCest
         $I->seeResponseIsJson();
         $I->seeResponseContainsJson([
             'data' => [
-                "updateSetting" => true
+                "updateSetting" => false
             ],
         ]);
     }

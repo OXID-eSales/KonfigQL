@@ -6,6 +6,7 @@ namespace APICodingDays\KonfigQL\Setting\Infrastructure;
 
 use APICodingDays\KonfigQL\Setting\DataType\Setting;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
+use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Infrastructure\Legacy;
 
 final class SettingRepository
@@ -73,9 +74,16 @@ final class SettingRepository
             return (!in_array($configVar['OXVARNAME'], $this->filterInternalConfig));
         });
 
-        return array_map(function ($setting) {
+
+        $settingObjects = array_map(function ($setting) {
             return new Setting($setting);
         }, $filteredSettings);
+
+        $filteredSettingObjects = array_filter($settingObjects, function (Setting $setting) {
+            return $setting->displayName() != $setting->internalName();
+        });
+
+        return $filteredSettingObjects;
     }
 
     public function getSingleSetting(string $settingId):Setting
@@ -97,6 +105,11 @@ final class SettingRepository
             );
         /** @var \Doctrine\DBAL\Statement $result */
         $result = $queryBuilder->execute();
+
+        if ($result->rowCount() !== 1) {
+            throw new NotFound();
+        }
+
         $setting = $result->fetch();
 
         return new Setting($setting);
