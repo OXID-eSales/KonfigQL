@@ -25,7 +25,7 @@
         "friendsofphp/php-cs-fixer": "^2.18.2",
         "php-parallel-lint/php-parallel-lint": "^1.1",
         "phpstan/phpstan": "^0.12.26",
-        "codeception/module-rest": "^1.0",
+        "codeception/module-rest": "v1.2.5",
         "codeception/module-phpbrowser": "^1.0"
     },
     "autoload": {
