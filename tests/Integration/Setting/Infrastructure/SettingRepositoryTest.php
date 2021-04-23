@@ -10,9 +10,6 @@ use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \APICodingDays\KonfigQL\Setting\Infrastructure
- */
 final class SettingRepositoryTest extends TestCase
 {
     public function testSettings(): void

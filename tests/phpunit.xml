@@ -17,6 +17,9 @@
         <whitelist addUncoveredFilesFromWhitelist="true"
                    processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">../src</directory>
+            <exclude>
+                <directory suffix=".php">../src/Setting/Controller</directory>
+            </exclude>
         </whitelist>
     </filter>
 </phpunit>
