@@ -15,8 +15,15 @@ use TheCodingMachine\GraphQLite\Types\ID;
  */
 final class Setting
 {
+    /**
+     * @var string[]
+     */
     private $setting;
 
+    /**
+     * Setting constructor.
+     * @param string[] $setting
+     */
     public function __construct(array $setting)
     {
         $this->setting = $setting;
@@ -100,6 +107,7 @@ final class Setting
     {
         $translationKey = SettingTitleMap::MAP[$name][$type] ?? null;
         if ($translationKey) {
+            /** @var string $translation */
             $translation = Registry::getLang()->translateString($translationKey, null, true);
             if ($translation && $translation !== $translationKey) {
                 return (string) $translation;
@@ -108,6 +116,7 @@ final class Setting
 
         foreach (['SHOP_THEME_', 'SHOP_MODULE_'] as $item) {
             $translationKey = ($type === 'help' ? 'HELP_' : '') . $item . $name;
+            /** @var string $translation */
             $translation = Registry::getLang()->translateString($translationKey, null, true);
             if ($translation && $translation !== $translationKey) {
                 return (string) $translation;
