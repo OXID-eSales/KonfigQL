@@ -15,8 +15,15 @@ use TheCodingMachine\GraphQLite\Types\ID;
  */
 final class Setting
 {
+    /**
+     * @var string[]
+     */
     private $setting;
 
+    /**
+     * Setting constructor.
+     * @param string[] $setting
+     */
     public function __construct(array $setting)
     {
         $this->setting = $setting;
@@ -37,7 +44,7 @@ final class Setting
      */
     public function displayName(): string
     {
-        $name = $this->setting['OXVARNAME'];
+        $name = (string) $this->setting['OXVARNAME'];
         $translation = $this->findTranslation($name, 'translation');
         if ($translation) {
             return $translation;
@@ -59,7 +66,7 @@ final class Setting
      */
     public function helpText(): string
     {
-        $name = $this->setting['OXVARNAME'];
+        $name = (string) $this->setting['OXVARNAME'];
         $translation = $this->findTranslation($name, 'help');
         if ($translation) {
             return $translation;
@@ -96,10 +103,11 @@ final class Setting
         return (string) $res;
     }
 
-    private function findTranslation($name, $type): string
+    private function findTranslation(string $name, string $type): string
     {
         $translationKey = SettingTitleMap::MAP[$name][$type] ?? null;
         if ($translationKey) {
+            /** @var string $translation */
             $translation = Registry::getLang()->translateString($translationKey, null, true);
             if ($translation && $translation !== $translationKey) {
                 return (string) $translation;
@@ -108,6 +116,7 @@ final class Setting
 
         foreach (['SHOP_THEME_', 'SHOP_MODULE_'] as $item) {
             $translationKey = ($type === 'help' ? 'HELP_' : '') . $item . $name;
+            /** @var string $translation */
             $translation = Registry::getLang()->translateString($translationKey, null, true);
             if ($translation && $translation !== $translationKey) {
                 return (string) $translation;

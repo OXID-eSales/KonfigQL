@@ -21,16 +21,16 @@ final class Setting
 
     /**
      * @Query()
-     * @param string|null $settingName
+     * @param string|null $settingId
      *
      * @return SettingDataType[]
      */
-    public function settings(string $settingName = null): array
+    public function settings(string $settingId = null): array
     {
-        if (empty($settingName)) {
+        if (empty($settingId)) {
             return $this->settingsService->settings();
         } else {
-            return [$this->settingsService->getSingleSetting($settingName)];
+            return [$this->settingsService->getSingleSetting($settingId)];
         }
     }
 
@@ -38,12 +38,12 @@ final class Setting
      * Updates a single setting
      *
      * @Mutation()
-     * @param string $settingName Name (OXVARNAME) of the setting
+     * @param string $settingId   Id (OXID) of the setting
      * @param string $value       Value (OXVARVALUE, encoded) of the setting
      * @return bool
      */
-    public function updateSetting(string $settingName, string $value): bool
+    public function updateSetting(string $settingId, string $value): bool
     {
-        return $this->settingsService->updateSingleSetting($settingName, $value);
+        return $this->settingsService->updateSingleSetting($settingId, $value);
     }
 }
