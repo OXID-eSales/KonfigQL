@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace APICodingDays\KonfigQL\Setting\DataType;
 
-use APICodingDays\KonfigQL\Category\Infrastructure\SettingTitleMap;
+use APICodingDays\KonfigQL\Setting\Infrastructure\SettingTitleMap;
 use OxidEsales\Eshop\Core\Registry;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;

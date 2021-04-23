@@ -1,6 +1,6 @@
 <?php
 
-namespace APICodingDays\KonfigQL\Category\Infrastructure;
+namespace APICodingDays\KonfigQL\Setting\Infrastructure;
 
 final class SettingTitleMap
 {
