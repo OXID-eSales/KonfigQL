@@ -76,7 +76,7 @@ final class SettingRepository
         }, $filteredSettings);
     }
 
-    public function getSingleSetting($settingName):Setting
+    public function getSingleSetting(string $settingName):Setting
     {
         $configKey = $this->legacyService->getConfigParam('sConfigKey');
         $shopId = $this->legacyService->getShopId();
@@ -100,7 +100,7 @@ final class SettingRepository
         return new Setting($setting);
     }
 
-    public function updateSingleSetting($settingName, $value): bool
+    public function updateSingleSetting(string $settingName, string $value): bool
     {
         $configKey = $this->legacyService->getConfigParam('sConfigKey');
         $shopId = $this->legacyService->getShopId();
